@@ -8,7 +8,7 @@ output: html_document
 # Estatística descritiva - Spaceship Titanic
 
 ```{r}
-df_train<- read.csv("~/Documents/GitHub/math-stats-training/R/spaceship-titanic/train.csv")
+df_train<- read.csv("~/Documents/GitHub/math-stats-training/spaceship-titanic")
 
 ```
 
