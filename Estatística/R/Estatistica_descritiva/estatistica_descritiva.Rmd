@@ -7,12 +7,82 @@ output: html_document
 
 # Estatística descritiva - Spaceship Titanic
 
+## Importando bibliotecas
+
 ```{r}
-df_train<- read.csv("~/Documents/GitHub/math-stats-training/spaceship-titanic")
+library(dplyr)
 
 ```
 
-```{}
+## Importando dados
+
+```{r}
+df_train <- read.csv("https://raw.githubusercontent.com/FranciscoFoz/math-stats-training/main/spaceship-titanic/train.csv")
+df_train
+```
+
+## Visualizando dados tabulares
+
+### Head
+
+```{r}
+
+head(df_train,10)
+```
+
+### Select
+
+```{r}
+select(df_train,HomePlanet)
+```
+
+### Unique
+
+```{r}
+unique(select(df_train,HomePlanet))
+```
+
+### Arrange
+
+```{r}
+arrange(unique(select(df_train,)))
+```
+
+```{r}
+arrange(df_train,Age)
+
+```
+
+### C
+
+```{r}
+
+c(unique(select(df_train,HomePlanet)))
+```
+
+```{r}
+c(1,2,3,4,5,6,7,8,9)
+```
+
+```{r}
+c(unique(select(df_train,Age)))
+```
+
+### Sprintf
+
+```{r}
+sprintf('O valor gasto em serviços de quarto é de %s até %s (valor da moeda corrente)',
+        min(df_train$RoomService),max(df_train$RoomService))
+```
+
+*Mesma coisa só que com Glue:*
+
+![]()
+
+```{r}
+library(glue)
+
+glue('O valor gasto em serviços de quarto é de {min(df_train$RoomService)} até {max(df_train$RoomService)} (valor da moeda corrente)')
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
