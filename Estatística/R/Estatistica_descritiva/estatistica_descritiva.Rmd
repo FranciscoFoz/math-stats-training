@@ -45,7 +45,7 @@ unique(select(df_train,HomePlanet))
 ### Arrange
 
 ```{r}
-arrange(unique(select(df_train,)))
+arrange(unique(select(df_train,Age)))
 ```
 
 ```{r}
@@ -84,6 +84,57 @@ library(glue)
 
 glue('O valor gasto em serviços de quarto é de {min(df_train$RoomService)} até {max(df_train$RoomService)} (valor da moeda corrente)')
 ```
+
+## Distribuição de Frequências
+
+```{r}
+table(df_train$HomePlanet)
+
+```
+
+```{r}
+prop.table(table(df_train$HomePlanet)) * 100
+```
+
+```{r}
+
+freq_homeplanet <- cbind(freq = table(df_train$HomePlanet), 
+                  percent = prop.table(table(df_train$HomePlanet)) * 100)
+freq_homeplanet
+```
+
+```{r}
+
+colnames(freq_homeplanet) <- c('Frequência', 'Porcentagem (%)')
+freq_homeplanet
+```
+
+```{r}
+rownames(freq_homeplanet) <- c('Não identificado','Terra', 'Europa','Marte')
+freq_homeplanet
+```
+
+```{r}
+
+frequencia <- table(df_train$Transported,df_train$HomePlanet)
+frequencia
+```
+
+```{r}
+percentual <- prop.table(frequencia) *100
+percentual
+```
+
+```{r}
+tapply(df_train$Age,
+       list(df_train$HomePlanet,df_train$Transported),mean)
+```
+
+```{r}
+
+```
+
+\
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
