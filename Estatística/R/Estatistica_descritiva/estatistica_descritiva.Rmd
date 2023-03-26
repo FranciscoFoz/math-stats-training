@@ -1,140 +1,271 @@
 ---
 title: "Estatistica descritiva"
 author: "Francisco Foz""
-date: "Fevereiro, 2023"
+date: "Março, 2023"
 output: html_document
 ---
 
-# Estatística descritiva - Spaceship Titanic
-
-## Importando bibliotecas
+# Estatística descritiva
 
 ```{r}
 library(dplyr)
-
+library(glue)
+library(tidyr)
+library(ggplot2)
+library(DescTools)
 ```
 
 ## Importando dados
 
 ```{r}
-df_train <- read.csv("https://raw.githubusercontent.com/FranciscoFoz/math-stats-training/main/spaceship-titanic/train.csv")
-df_train
-```
-
-## Visualizando dados tabulares
-
-### Head
-
-```{r}
-
-head(df_train,10)
-```
-
-### Select
-
-```{r}
-select(df_train,HomePlanet)
-```
-
-### Unique
-
-```{r}
-unique(select(df_train,HomePlanet))
-```
-
-### Arrange
-
-```{r}
-arrange(unique(select(df_train,Age)))
-```
-
-```{r}
-arrange(df_train,Age)
-
-```
-
-### C
-
-```{r}
-
-c(unique(select(df_train,HomePlanet)))
-```
-
-```{r}
-c(1,2,3,4,5,6,7,8,9)
-```
-
-```{r}
-c(unique(select(df_train,Age)))
-```
-
-### Sprintf
-
-```{r}
-sprintf('O valor gasto em serviços de quarto é de %s até %s (valor da moeda corrente)',
-        min(df_train$RoomService),max(df_train$RoomService))
-```
-
-*Mesma coisa só que com Glue:*
-
-![]()
-
-```{r}
-library(glue)
-
-glue('O valor gasto em serviços de quarto é de {min(df_train$RoomService)} até {max(df_train$RoomService)} (valor da moeda corrente)')
-```
-
-## Distribuição de Frequências
-
-```{r}
-table(df_train$HomePlanet)
-
-```
-
-```{r}
-prop.table(table(df_train$HomePlanet)) * 100
+bdtd_IA <- read.csv("/home/franciscofoz/Documents/GitHub/math-stats-training/Datasets/BDTD_inteligencia_artificial/BDTD_InteligenciaArtificial_assunto_20230214.csv",sep=';')
+bdtd_IA
 ```
 
 ```{r}
 
-freq_homeplanet <- cbind(freq = table(df_train$HomePlanet), 
-                  percent = prop.table(table(df_train$HomePlanet)) * 100)
-freq_homeplanet
+head(bdtd_IA,10)
+```
+
+str(bdtd_IA)
+
+```{r}
+summary(bdtd_IA)
+
 ```
 
 ```{r}
-
-colnames(freq_homeplanet) <- c('Frequência', 'Porcentagem (%)')
-freq_homeplanet
+colSums(is.na(bdtd_IA))
 ```
+
+## Quantidade total de trabalhos
 
 ```{r}
-rownames(freq_homeplanet) <- c('Não identificado','Terra', 'Europa','Marte')
-freq_homeplanet
+glue('A quantidade total de trabalhos foi de ', nrow(bdtd_IA))
 ```
 
-```{r}
-
-frequencia <- table(df_train$Transported,df_train$HomePlanet)
-frequencia
-```
-
-```{r}
-percentual <- prop.table(frequencia) *100
-percentual
-```
-
-```{r}
-tapply(df_train$Age,
-       list(df_train$HomePlanet,df_train$Transported),mean)
-```
+## Quantidade teses e dissertações
 
 ```{r}
 
+quantidade_teses_dissertacoes <- table(bdtd_IA$types)
+
 ```
 
-\
+
+```{r}
+percentual_teses_dissertacoes <- round((prop.table(quantidade_teses_dissertacoes)*100),2) 
+```
+
+
+```{r}
+
+cbind(Frequência = quantidade_teses_dissertacoes,Percentual= percentual_teses_dissertacoes)
+
+
+
+
+```
+
+
+```{r}
+
+tabela_frequencia <- function(df, variavel) {
+  
+  # Esta função irá realizar uma tabela de frequência de acordo com a variavel inserida
+  # do conjunto de dados extraídos da BDTD sobre "Inteligência Artificial".
+    
+  # df = Conjunto de dados
+  # variavel = Variável do conjunto de dados da armazenadas na BDTD
+  
+  
+  # Calcula a frequência e percentual da variável
+  frequencia <- table(df[[variavel]])
+  percentual <- round(prop.table(frequencia) * 100, 2)
+  
+  # Cria um dataframe com os resultados
+  tabela_freq <- data.frame(cbind('Frequência' = frequencia,
+                                  'Percentual'= percentual))
+  tabela_freq <- arrange(tabela_freq,desc(Percentual))
+  
+  return(tabela_freq)
+}
+
+
+```
+
+```{r}
+freq_dissertacoes_teses <- tabela_frequencia(bdtd_IA,'types')
+freq_dissertacoes_teses
+
+```
+
+```{r}
+rownames(freq_dissertacoes_teses)[rownames(freq_dissertacoes_teses) == "masterThesis"] <- "Dissertação"
+rownames(freq_dissertacoes_teses)[rownames(freq_dissertacoes_teses) == "doctoralThesis"] <- "Tese"
+```
+
+```{r}
+freq_dissertacoes_teses
+```
+
+```{r}
+freq_dissertacoes_teses
+```
+
+### Quantidade de trabalhos por instituição
+
+```{r}
+freq_instituicoes <- tabela_frequencia(bdtd_IA,'institutions') 
+freq_instituicoes
+
+```
+
+### Top 10 Instituições
+
+```{r}
+
+freq_instituicoes %>% head(10)
+```
+
+## Quantidade de teses e dissertações por instituição
+
+```{r}
+freq_instituicoes_trabalhos <- cbind(table(bdtd_IA$institutions,bdtd_IA$types))
+freq_instituicoes_trabalhos
+```
+
+```{r}
+freq_percentual_instituicoes_trabalhos <- round((prop.table(freq_instituicoes_trabalhos) * 100),2)
+freq_percentual_instituicoes_trabalhos <- data.frame(freq_percentual_instituicoes_trabalhos)
+arrange(freq_percentual_instituicoes_trabalhos,desc(doctoralThesis))
+
+
+```
+
+### Quantidade de trabalhos por ano
+
+```{r}
+freq_ano <- tabela_frequencia(bdtd_IA,'publicationDates')
+freq_ano
+```
+
+
+### Medidas de tendência central
+
+```{r}
+Moda <- function(x){
+  tabela <- table(x)
+  moda <- as.numeric(names(tabela)[tabela == max(tabela)])
+  
+  return(moda)
+}
+
+```
+
+
+```{r}
+media_trabalhos <- freq_ano$Frequência %>% mean() %>% round(2)
+mediana_trabalhos <- freq_ano$Frequência %>% median() %>% round(2)
+moda_trabalhos <-  freq_ano$Frequência %>% Moda() %>% round(2)
+
+glue('Média: {media_trabalhos}\nMediana: {mediana_trabalhos}\nModa: {moda_trabalhos}')
+```
+
+## Medidas de separatrizes
+## Quartis, Decis e Percentis
+### Exemplo por ano
+
+
+
+```{r}
+quantile(freq_ano$Frequência, c(0.25,0.5,0.75))
+```
+
+
+
+```{r}
+decis <- c()
+for(i in 1:9){
+  decis <- c(decis, i/10)
+}
+decis
+```
+
+
+```{r}
+quantile(freq_ano$Frequência, decis)
+```
+
+
+
+```{r}
+centis <- c()
+for(i in 1:99){
+  centis <- c(centis, i/100)
+}
+centis
+
+
+```
+
+
+```{r}
+quantile(freq_ano$Frequência, centis)
+```
+
+### Boxplot
+
+```{r}
+
+freq_instituicao_ano <- bdtd_IA %>% 
+  count(institutions, publicationDates) %>% 
+  rename(frequencia = n) %>% 
+  select(institutions, publicationDates, frequencia)
+
+instituicoes_mais_freq <- c("UNICAMP", "UFSC", "UFRGS", "ITA", "UFPE")
+
+freq_instituicoes_mais_freq_ano <- freq_instituicao_ano %>% 
+  filter(institutions %in% instituicoes_mais_freq)
+
+```
+
+```{r}
+library(ggplot2)
+
+# Plotar o boxplot
+ggplot(freq_instituicoes_mais_freq_ano, aes(x = institutions, y = frequencia,fill=institutions)) +
+  stat_boxplot(geom = 'errorbar', width = 0.4) +
+  geom_boxplot() +
+  ggtitle('Variação de trabalhos publicados por ano por instituição')
+
+```
+
+### Medidas de dispersão
+
+#### Desvio Médio absoluto
+```{r}
+library(DescTools)
+frequencia_ano <- tabela_frequencia(bdtd_IA,'publicationDates')$Frequência
+MeanAD(frequencia_ano)
+
+```
+
+#### Variância
+```{r}
+frequencia_ano %>%  var()
+```
+
+
+
+#### Desvio Padrão
+
+```{r}
+
+frequencia_ano %>%  sd()
+
+```
+
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
