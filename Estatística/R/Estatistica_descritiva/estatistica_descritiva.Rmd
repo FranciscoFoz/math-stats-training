@@ -52,11 +52,9 @@ quantidade_teses_dissertacoes <- table(bdtd_IA$types)
 
 ```
 
-
 ```{r}
 percentual_teses_dissertacoes <- round((prop.table(quantidade_teses_dissertacoes)*100),2) 
 ```
-
 
 ```{r}
 
@@ -66,7 +64,6 @@ cbind(Frequência = quantidade_teses_dissertacoes,Percentual= percentual_teses_d
 
 
 ```
-
 
 ```{r}
 
@@ -150,7 +147,6 @@ freq_ano <- tabela_frequencia(bdtd_IA,'publicationDates')
 freq_ano
 ```
 
-
 ### Medidas de tendência central
 
 ```{r}
@@ -163,7 +159,6 @@ Moda <- function(x){
 
 ```
 
-
 ```{r}
 media_trabalhos <- freq_ano$Frequência %>% mean() %>% round(2)
 mediana_trabalhos <- freq_ano$Frequência %>% median() %>% round(2)
@@ -173,16 +168,14 @@ glue('Média: {media_trabalhos}\nMediana: {mediana_trabalhos}\nModa: {moda_traba
 ```
 
 ## Medidas de separatrizes
+
 ## Quartis, Decis e Percentis
+
 ### Exemplo por ano
-
-
 
 ```{r}
 quantile(freq_ano$Frequência, c(0.25,0.5,0.75))
 ```
-
-
 
 ```{r}
 decis <- c()
@@ -192,12 +185,9 @@ for(i in 1:9){
 decis
 ```
 
-
 ```{r}
 quantile(freq_ano$Frequência, decis)
 ```
-
-
 
 ```{r}
 centis <- c()
@@ -208,7 +198,6 @@ centis
 
 
 ```
-
 
 ```{r}
 quantile(freq_ano$Frequência, centis)
@@ -244,6 +233,7 @@ ggplot(freq_instituicoes_mais_freq_ano, aes(x = institutions, y = frequencia,fil
 ### Medidas de dispersão
 
 #### Desvio Médio absoluto
+
 ```{r}
 library(DescTools)
 frequencia_ano <- tabela_frequencia(bdtd_IA,'publicationDates')$Frequência
@@ -252,11 +242,10 @@ MeanAD(frequencia_ano)
 ```
 
 #### Variância
+
 ```{r}
 frequencia_ano %>%  var()
 ```
-
-
 
 #### Desvio Padrão
 
@@ -265,7 +254,6 @@ frequencia_ano %>%  var()
 frequencia_ano %>%  sd()
 
 ```
-
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
