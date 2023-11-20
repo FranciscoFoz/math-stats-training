@@ -97,9 +97,39 @@ cat("4. Qual é a probabilidade de que entre 41 e 48 livros (inclusive) sejam cl
     round(sum(dbinom(x = 41:k, size = n, prob = p)) * 100,2),
     "%")
 
+# 5. Você está interessado em calcular a probabilidade de ter um número específico de conversões em um determinado número de visitantes. A taxa de conversão de visitantes para clientes em um site de comércio eletrônico é de 6%. Em um determinado dia, a empresa teve 500 visitantes.
+
+# - Qual é a probabilidade de exatamente 50 desses visitantes se converterem em clientes?
+# - Qual é a probabilidade de pelo menos 60 desses visitantes se converterem em clientes?
+# - Qual é a probabilidade de no máximo 40 desses visitantes se converterem em clientes?
 
 
 
+
+
+
+
+# 6. Você está analisando os resultados de um teste A/B realizado em um site para avaliar a eficácia de um novo design de página na taxa de cliques. Na versão A (antiga), a taxa de cliques é de 12%. Na versão B (nova), a empresa espera que a taxa de cliques aumente para 15%.
+
+# Suponha que você escolheu aleatoriamente 200 visitantes para participar do teste.
+
+# - Qual é a probabilidade de exatamente 25 visitantes clicarem na versão A?
+# - Qual é a probabilidade de no máximo 20 visitantes clicarem na versão A?
+
+
+
+
+#- Qual é a probabilidade de pelo menos 30 visitantes clicarem na versão B?
+
+
+
+
+
+# 7. Suponha que você está analisando a distribuição de cliques em anúncios online. 
+# A taxa média de cliques em um anúncio específico é de 8%. Você está interessado em explorar a média e a variação dessa distribuição binomial.
+
+# - Qual é o valor médio (esperança) do número de cliques em 500 visualizações desse anúncio?
+# - Qual é o desvio padrão do número de cliques em 500 visualizações desse anúncio?
 
 
 
