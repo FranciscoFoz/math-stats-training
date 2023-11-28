@@ -1,2 +1,3 @@
 # DISTRIBUIÇÃO POISSON
 
+rpois(100,2)
