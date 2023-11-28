@@ -97,30 +97,57 @@ cat("4. Qual é a probabilidade de que entre 41 e 48 livros (inclusive) sejam cl
     round(sum(dbinom(x = 41:k, size = n, prob = p)) * 100,2),
     "%")
 
-# 5. Você está interessado em calcular a probabilidade de ter um número específico de conversões em um determinado número de visitantes. A taxa de conversão de visitantes para clientes em um site de comércio eletrônico é de 6%. Em um determinado dia, a empresa teve 500 visitantes.
+# 5. Você está interessado em calcular a probabilidade de ter um número específico de conversões em um determinado número de visitantes. 
+# A taxa de conversão de visitantes para clientes em um site de comércio eletrônico é de 6%. Em um determinado dia, a empresa teve 500 visitantes.
 
 # - Qual é a probabilidade de exatamente 50 desses visitantes se converterem em clientes?
 # - Qual é a probabilidade de pelo menos 60 desses visitantes se converterem em clientes?
 # - Qual é a probabilidade de no máximo 40 desses visitantes se converterem em clientes?
 
+k <-50
+size <- 500
+prob <- 0.06
+dbinom(k,size=size,prob = prob)
+
+k <-60
+size <- 500
+prob <- 0.06
+pbinom(k,size=size,prob = prob,lower.tail=T)
+
+k <-40
+size <- 500
+prob <- 0.06
+pbinom(k,size=size,prob = prob,lower.tail=T)
 
 
 
 
 
-
-# 6. Você está analisando os resultados de um teste A/B realizado em um site para avaliar a eficácia de um novo design de página na taxa de cliques. Na versão A (antiga), a taxa de cliques é de 12%. Na versão B (nova), a empresa espera que a taxa de cliques aumente para 15%.
+# 6. Você está analisando os resultados de um teste A/B realizado em um site para avaliar a eficácia de um novo design de página na taxa de cliques. 
+# Na versão A (antiga), a taxa de cliques é de 12%. Na versão B (nova), a empresa espera que a taxa de cliques aumente para 15%.
 
 # Suponha que você escolheu aleatoriamente 200 visitantes para participar do teste.
 
 # - Qual é a probabilidade de exatamente 25 visitantes clicarem na versão A?
 # - Qual é a probabilidade de no máximo 20 visitantes clicarem na versão A?
 
+k <-25
+size <- 200
+prob <- 0.12
+dbinom(k,size=size,prob = prob)
 
+k <-20
+size <- 200
+prob <- 0.12
+pbinom(k,size=size,prob = prob,lower.tail = T)
 
 
 #- Qual é a probabilidade de pelo menos 30 visitantes clicarem na versão B?
 
+k <-30
+size <- 200
+prob <- 0.15
+pbinom(k,size=size,prob = prob,lower.tail = T)
 
 
 
@@ -131,5 +158,21 @@ cat("4. Qual é a probabilidade de que entre 41 e 48 livros (inclusive) sejam cl
 # - Qual é o valor médio (esperança) do número de cliques em 500 visualizações desse anúncio?
 # - Qual é o desvio padrão do número de cliques em 500 visualizações desse anúncio?
 
+n <- 500
+p <- 0.08
+
+media <- n*p
+desvio_padrao <- sqrt(n * p * (1 - p))
+limite_inferior <- media - 2*desvio_padrao
+limite_superior <- media + 2*desvio_padrao
+cat("Probabilidade:",media,"Desvio Padrão:",desvio_padrao,
+    "limite inferior",limite_inferior,"limite superior", limite_superior)
+
+# 8. Um concurso possui uma prova com 15 questões de múltipla escolha, cada uma com 4 alternativas possíveis. 
+# Um candidato decide chutar todas as respostas. Qual é a probabilidade de ele acertar exatamente 8 questões?
 
 
+k <-8
+size <- 15
+prob <- 0.25
+dbinom(k,size=size,prob = prob)
