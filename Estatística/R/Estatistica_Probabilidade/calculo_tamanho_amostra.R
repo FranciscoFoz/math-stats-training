@@ -35,3 +35,22 @@ e <- 5
 n <- ((z**2) * (s**2) * N) / (((z**2) * (s**2)) + (e**2) * (N-1))
 round(n)
 
+
+
+"
+Suponha que você trabalhe em uma empresa com 500 funcionários e deseja realizar 
+um estudo sobre a satisfação dos funcionários em relação ao ambiente de trabalho. 
+
+Você deseja determinar o tamanho da amostra necessário para obter um erro máximo
+sobre a média populacional de 2 pontos, com um nível de confiança de 90%. 
+
+O desvio padrão amostral é estimado em 4 pontos.
+"
+
+N <- 500
+z <- qnorm(1-(0.1/2))
+s <- 12
+e <- 4
+
+n <- ((z**2) * (s**2) * N) / (((z**2) * (s**2)) + (e**2) * (N-1))
+round(n)
